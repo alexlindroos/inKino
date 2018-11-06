@@ -10,6 +10,7 @@ import 'package:inkino/ui/events/events_page.dart';
 import 'package:inkino/ui/showtimes/showtimes_page.dart';
 import 'package:inkino/ui/theater_list/inkino_drawer_header.dart';
 import 'package:inkino/ui/theater_list/theater_list.dart';
+import 'package:inkino/utils/app_translations.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage();
@@ -92,12 +93,12 @@ class _MainPageState extends State<MainPage>
     );
   }
 
-  Widget _buildSearchField() {
+  Widget _buildSearchField(BuildContext context) {
     return TextField(
       controller: _searchQuery,
       autofocus: true,
-      decoration: const InputDecoration(
-        hintText: 'Search movies & showtimes...',
+      decoration: InputDecoration(
+        hintText: AppTranslations.of(context).text("search_hint"),
         border: InputBorder.none,
         hintStyle: const TextStyle(color: Colors.white30),
       ),
@@ -143,15 +144,15 @@ class _MainPageState extends State<MainPage>
       key: scaffoldKey,
       appBar: AppBar(
         leading: _isSearching ? const BackButton() : null,
-        title: _isSearching ? _buildSearchField() : _buildTitle(context),
+        title: _isSearching ? _buildSearchField(context) : _buildTitle(context),
         actions: _buildActions(),
         bottom: TabBar(
           controller: _controller,
           isScrollable: true,
-          tabs: const <Tab>[
-            const Tab(text: 'Now in theaters'),
-            const Tab(text: 'Showtimes'),
-            const Tab(text: 'Coming soon'),
+          tabs: <Tab>[
+            Tab(text: AppTranslations.of(context).text("main_tab")),
+            Tab(text: AppTranslations.of(context).text("main_tab_1")),
+            Tab(text: AppTranslations.of(context).text("main_tab_2")),
           ],
         ),
       ),

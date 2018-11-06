@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inkino/models/show.dart';
 import 'package:inkino/ui/common/info_message_view.dart';
 import 'package:inkino/ui/showtimes/showtime_list_tile.dart';
+import 'package:inkino/utils/app_translations.dart';
 
 class ShowtimeList extends StatelessWidget {
   static const Key emptyViewKey = Key('emptyView');
@@ -13,11 +14,11 @@ class ShowtimeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (shows.isEmpty) {
-      return const InfoMessageView(
+      return InfoMessageView(
         key: emptyViewKey,
-        title: 'All empty!',
+        title: AppTranslations.of(context).text("event_grid_title"),
         description:
-            'Didn\'t find any movies\nabout to start for today. ¯\\_(ツ)_/¯',
+            AppTranslations.of(context).text("showtime_list_description"),
       );
     }
 

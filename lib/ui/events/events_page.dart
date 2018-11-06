@@ -8,6 +8,7 @@ import 'package:inkino/ui/common/loading_view.dart';
 import 'package:inkino/ui/common/platform_adaptive_progress_indicator.dart';
 import 'package:inkino/ui/events/event_grid.dart';
 import 'package:inkino/ui/events/events_page_view_model.dart';
+import 'package:inkino/utils/app_translations.dart';
 
 class EventsPage extends StatelessWidget {
   EventsPage(this.listType);
@@ -33,7 +34,7 @@ class EventsPageContent extends StatelessWidget {
       status: viewModel.status,
       loadingContent: const PlatformAdaptiveProgressIndicator(),
       errorContent: ErrorView(
-        description: 'Error loading events.',
+        description: AppTranslations.of(context).text("events_page_description"),
         onRetry: viewModel.refreshEvents,
       ),
       successContent: EventGrid(

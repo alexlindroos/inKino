@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inkino/models/event.dart';
+import 'package:inkino/utils/app_translations.dart';
 
 class StorylineWidget extends StatefulWidget {
   StorylineWidget(this.event);
@@ -58,10 +59,10 @@ class _StorylineWidgetState extends State<StorylineWidget> {
     );
 
     if (_isExpanded) {
-      return const Text('[touch to collapse]', style: captionStyle);
+      return Text(AppTranslations.of(context).text("storyline_is_expanded"), style: captionStyle);
     }
 
-    return const Text('[touch to expand]', style: captionStyle);
+    return Text(AppTranslations.of(context).text("storyline_not_expanded"), style: captionStyle);
   }
 
   Widget _buildContent() {

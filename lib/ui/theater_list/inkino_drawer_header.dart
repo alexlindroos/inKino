@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:inkino/assets.dart';
+import 'package:inkino/utils/app_translations.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:inkino/utils/application.dart';
 
 class InKinoDrawerHeader extends StatefulWidget {
   const InKinoDrawerHeader();
@@ -11,6 +13,11 @@ class InKinoDrawerHeader extends StatefulWidget {
 }
 
 class _InKinoDrawerHeaderState extends State<InKinoDrawerHeader> {
+  static final List<String> languageCodesList =
+      application.supportedLanguagesCodes;
+
+  static bool englishSelected = false;
+  static bool finnishSelected = false;
   static const String flutterUrl = 'https://flutter.io/';
   static const String githubUrl = 'https://github.com/roughike/inKino';
   static const TextStyle linkStyle = const TextStyle(
@@ -28,6 +35,9 @@ class _InKinoDrawerHeaderState extends State<InKinoDrawerHeader> {
       ..onTap = () => _openUrl(flutterUrl);
     _githubTapRecognizer = TapGestureRecognizer()
       ..onTap = () => _openUrl(githubUrl);
+    if (!finnishSelected) {
+      englishSelected = true;
+    }
   }
 
   @override
@@ -78,8 +88,8 @@ class _InKinoDrawerHeaderState extends State<InKinoDrawerHeader> {
           size: 18.0,
         ),
         const SizedBox(width: 8.0),
-        const Text(
-          'About',
+        Text(
+          AppTranslations.of(context).text("about_button_title"),
           textAlign: TextAlign.end,
           style: const TextStyle(
             color: Colors.white70,
@@ -108,7 +118,7 @@ class _InKinoDrawerHeaderState extends State<InKinoDrawerHeader> {
 
   Widget _buildAboutDialog(BuildContext context) {
     return AlertDialog(
-      title: const Text('About inKino'),
+      title: Text(AppTranslations.of(context).text("about_dialog_title")),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +134,7 @@ class _InKinoDrawerHeaderState extends State<InKinoDrawerHeader> {
             Navigator.of(context).pop();
           },
           textColor: Theme.of(context).primaryColor,
-          child: const Text('Okay, got it!'),
+          child: Text(AppTranslations.of(context).text("about_dialog_confirm")),
         ),
       ],
     );
@@ -133,22 +143,20 @@ class _InKinoDrawerHeaderState extends State<InKinoDrawerHeader> {
   Widget _buildAboutText() {
     return RichText(
       text: TextSpan(
-        text: 'inKino is the unofficial Finnkino client that '
-            'is minimalistic, fast, and delightful to use.\n\n',
+        text: AppTranslations.of(context).text("about_text"),
         style: const TextStyle(color: Colors.black87),
         children: <TextSpan>[
-          const TextSpan(text: 'The app was developed with '),
+          TextSpan(text: AppTranslations.of(context).text("about_text_1")),
           TextSpan(
             text: 'Flutter',
             recognizer: _flutterTapRecognizer,
             style: linkStyle,
           ),
-          const TextSpan(
-            text: ' and it\'s open source; check out the source '
-                'code yourself from ',
+          TextSpan(
+            text: AppTranslations.of(context).text("about_text_2")
           ),
           TextSpan(
-            text: 'the GitHub repo',
+            text: AppTranslations.of(context).text("about_text_3"),
             recognizer: _githubTapRecognizer,
             style: linkStyle,
           ),
@@ -166,13 +174,81 @@ class _InKinoDrawerHeaderState extends State<InKinoDrawerHeader> {
           width: 32.0,
         ),
         const SizedBox(width: 12.0),
-        const Expanded(
+        Expanded(
           child: Text(
-            'This product uses the TMDb API but is not endorsed or certified by TMDb.',
-            style: TextStyle(fontSize: 12.0),
+            AppTranslations.of(context).text("about_tmdb"),
+            style: const TextStyle(fontSize: 12.0),
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildLanguageButtons(BuildContext context) {
+    var isEnglishSelected = englishSelected ?
+        const Text(
+          'EN',
+          textAlign: TextAlign.end,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold)
+    ) : const Text(
+          'EN',
+          textAlign: TextAlign.end,
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 12.0,
+              fontWeight: FontWeight.normal),
+        );
+
+    var isFinnishSelected = finnishSelected ?
+        const Text(
+            'FI',
+            textAlign: TextAlign.end,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold)
+        ) : const Text(
+          'FI',
+          textAlign: TextAlign.end,
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 12.0,
+            fontWeight: FontWeight.normal),
+          );
+
+    var content = Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        InkWell(
+          onTap: () {
+            application.onLocaleChanged(Locale(languageCodesList[0]));
+            englishSelected = true;
+            finnishSelected = false;
+          },
+          child: isEnglishSelected,
+        ),
+        const SizedBox(width: 8.0),
+        InkWell(
+          onTap: () {
+            application.onLocaleChanged(Locale(languageCodesList[1]));
+            finnishSelected = true;
+            englishSelected = false;
+          },
+          child: isFinnishSelected,
+        ),
+      ],
+    );
+
+    return Material(
+      color: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: content,
+      ),
     );
   }
 
@@ -187,6 +263,7 @@ class _InKinoDrawerHeaderState extends State<InKinoDrawerHeader> {
         children: <Widget>[
           _buildAppNameAndVersion(context),
           _buildAboutButton(context),
+          _buildLanguageButtons(context)
         ],
       ),
     );

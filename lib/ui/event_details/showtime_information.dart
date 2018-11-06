@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inkino/models/show.dart';
+import 'package:inkino/utils/app_translations.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -63,7 +64,7 @@ class ShowtimeInformation extends StatelessWidget {
           onPressed: () => launchTicketsUrl(show.url),
           color: Theme.of(context).accentColor,
           textColor: Colors.white,
-          child: const Text('Tickets'),
+          child: Text(AppTranslations.of(context).text("showtime_info_tickets")),
         ),
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inkino/utils/widget_utils.dart';
 import 'package:meta/meta.dart';
+import 'package:inkino/utils/app_translations.dart';
 
 class ErrorView extends InfoMessageView {
   static const Key tryAgainButtonKey = Key('tryAgainButton');
@@ -43,7 +44,7 @@ class InfoMessageView extends StatelessWidget {
         key: actionButtonKey,
         onPressed: onActionButtonTapped,
         child: Text(
-          'TRY AGAIN',
+          AppTranslations.of(context).text("try_again"),
           style: TextStyle(color: Theme.of(context).primaryColor),
         ),
       ),

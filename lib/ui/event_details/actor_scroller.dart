@@ -6,6 +6,7 @@ import 'package:inkino/models/event.dart';
 import 'package:inkino/redux/actor/actor_actions.dart';
 import 'package:inkino/redux/actor/actor_selectors.dart';
 import 'package:inkino/redux/app/app_state.dart';
+import 'package:inkino/utils/app_translations.dart';
 
 class ActorScroller extends StatelessWidget {
   const ActorScroller(this.event);
@@ -99,15 +100,9 @@ class ActorScrollerContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const Padding(
+          Padding(
             padding: const EdgeInsets.only(left: 16.0),
-            child: const Text(
-              'Cast',
-              style: const TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+            child: Text(AppTranslations.of(context).text("actor_scroller_cast")),
           ),
           const SizedBox(height: 16.0),
           SizedBox.fromSize(

@@ -3,6 +3,7 @@ import 'package:inkino/models/event.dart';
 import 'package:inkino/ui/common/info_message_view.dart';
 import 'package:inkino/ui/event_details/event_details_page.dart';
 import 'package:inkino/ui/events/event_grid_item.dart';
+import 'package:inkino/utils/app_translations.dart';
 import 'package:meta/meta.dart';
 
 class EventGrid extends StatelessWidget {
@@ -57,8 +58,8 @@ class EventGrid extends StatelessWidget {
     if (events.isEmpty) {
       return InfoMessageView(
         key: emptyViewKey,
-        title: 'All empty!',
-        description: 'Didn\'t find any movies at\nall. ¯\\_(ツ)_/¯',
+        title: AppTranslations.of(context).text("event_grid_title"),
+        description: AppTranslations.of(context).text("event_grid_description"),
         onActionButtonTapped: onReloadCallback,
       );
     }

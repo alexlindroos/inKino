@@ -7,6 +7,7 @@ import 'package:inkino/ui/event_details/event_details_scroll_effects.dart';
 import 'package:inkino/ui/event_details/showtime_information.dart';
 import 'package:inkino/ui/event_details/storyline_widget.dart';
 import 'package:inkino/ui/events/event_poster.dart';
+import 'package:inkino/utils/app_translations.dart';
 import 'package:inkino/utils/widget_utils.dart';
 
 class EventDetailsPage extends StatefulWidget {
@@ -64,7 +65,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
           top: 186.0,
           left: 132.0,
           right: 16.0,
-          child: _buildEventInfo(),
+          child: _buildEventInfo(context),
         ),
       ],
     );
@@ -81,7 +82,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     );
   }
 
-  Widget _buildEventInfo() {
+  Widget _buildEventInfo(BuildContext context) {
     var content = <Widget>[]..addAll(
         _buildTitleAndLengthInMinutes(),
       );
@@ -89,7 +90,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     if (widget.event.directors.isNotEmpty) {
       content.add(Padding(
         padding: const EdgeInsets.only(top: 8.0),
-        child: _buildDirectorInfo(),
+        child: _buildDirectorInfo(context),
       ));
     }
 
@@ -122,12 +123,12 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     ];
   }
 
-  Widget _buildDirectorInfo() {
+  Widget _buildDirectorInfo(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Text(
-          'Director:',
+        Text(
+          AppTranslations.of(context).text("event_details_director_info"),
           style: const TextStyle(
             fontSize: 12.0,
             color: Colors.black87,
